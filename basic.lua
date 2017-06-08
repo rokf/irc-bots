@@ -37,17 +37,17 @@ end)
 -- how to respond to RPL_WELCOME
 -- https://www.alien.net.au/irc/irc2numerics.html
 irc:set_callback('001', function (self, ...)
-	irc:send_raw('JOIN ' .. channel) -- join channel #hello
+  irc:send_raw('JOIN ' .. channel) -- join channel #hello
 end)
 
 -- message receive
 irc:set_callback('PRIVMSG', function (self, sender, origin, message, pm)
-	if message == '!quit' then -- if someone in the channel types !quit the bot stops
-		self:QUIT('Bye!')
-		running = false
-	elseif message == 'hello' then -- respond to a "hello"
-		irc:send('PRIVMSG', channel, 'hi there')
-	end
+  if message == '!quit' then -- if someone in the channel types !quit the bot stops
+    self:QUIT('Bye!')
+    running = false
+  elseif message == 'hello' then -- respond to a "hello"
+    irc:send('PRIVMSG', channel, 'hi there')
+  end
 end)
 
 -- send names to server
@@ -55,5 +55,5 @@ irc:send_raw('NICK ' .. nickname)
 irc:send_raw('USER ' .. username .. " 0 * :" .. realname)
 
 while running do -- process received data
-	irc:process(connection:recv('*l'))
+  irc:process(connection:recv('*l'))
 end
